@@ -1,3 +1,5 @@
+![InvFull & Durability Alerts](https://raw.githubusercontent.com/Vivegass/invfull-durability-alerts/main/publish/banner.png)
+
 Neat, vanilla-styled notifications in the bottom-right corner — with a sound — when your **inventory is full** or the **item in your hand is about to break**.
 
 ## Features

@@ -1,4 +1,4 @@
-<p align="center"><img src="publish/icon.png" width="128" alt="InvFull & Durability Alerts icon"></p>
+<p align="center"><img src="publish/banner.png" alt="InvFull & Durability Alerts"></p>
 
 <h1 align="center">InvFull & Durability Alerts</h1>
 

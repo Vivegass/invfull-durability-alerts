@@ -12,6 +12,7 @@
 | Краткое описание (summary) | Neat bottom-right notifications with a sound when your inventory is full or your held item is about to break. |
 | Описание | содержимое `publish/description.md` |
 | Иконка | `publish/icon.png` |
+| Баннер | `publish/banner.png` (уже вставлен в начало description.md) |
 | Лицензия | MIT |
 | Исходники | https://github.com/Vivegass/invfull-durability-alerts |
 | Баг-трекер | https://github.com/Vivegass/invfull-durability-alerts/issues |
