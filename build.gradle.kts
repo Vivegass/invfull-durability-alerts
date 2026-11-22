@@ -136,7 +136,7 @@ publishMods {
     dryRun = !providers.gradleProperty("release").isPresent
 
     val neoFile = tasks.named<Jar>("neoforgeJar").flatMap { it.archiveFile }
-    val neoName = "InvFull & Durability Alerts ${sc.properties["mod.version"]} for $mcRange (NeoForge via Sinytra Connector)"
+    val neoName = "InvFull & Durability Alerts ${sc.properties["mod.version"]} for $mcRange (NeoForge)"
     val neoVersion = "${project.version}-neoforge"
 
     val mrId = providers.gradleProperty("modrinth_id").getOrElse("")
