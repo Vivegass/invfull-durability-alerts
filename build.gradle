@@ -76,6 +76,7 @@ jar {
 //   ./gradlew publishMods             -> dry run only (files go to build/publishMods)
 //   ./gradlew publishMods -Prelease   -> real upload
 // Tokens come from environment variables only: MODRINTH_TOKEN, CURSEFORGE_TOKEN, GITHUB_TOKEN.
+// GitHub release is created only when GITHUB_TOKEN is set.
 // A platform is skipped while its project id in gradle.properties is empty.
 // ---------------------------------------------------------------------------
 def changelogFor = { String ver ->
@@ -124,10 +125,13 @@ publishMods {
 		}
 	}
 
-	github {
-		repository = "Vivegass/invfull-durability-alerts"
-		accessToken = providers.environmentVariable("GITHUB_TOKEN")
-		commitish = "main"
-		tagName = "v${project.version}"
+	// GitHub release only when GITHUB_TOKEN is set (e.g. $env:GITHUB_TOKEN = gh auth token)
+	if (providers.environmentVariable("GITHUB_TOKEN").isPresent()) {
+		github {
+			repository = "Vivegass/invfull-durability-alerts"
+			accessToken = providers.environmentVariable("GITHUB_TOKEN")
+			commitish = "main"
+			tagName = "v${project.version}"
+		}
 	}
 }
