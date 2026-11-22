@@ -13,6 +13,8 @@ when your <b>inventory is full</b> or the <b>item in your hand is about to break
 <a href="https://github.com/Vivegass/invfull-durability-alerts/issues">Issues</a>
 </p>
 
+<p align="center"><img src="publish/demo.gif" width="640" alt="Demo: inventory-full and low-durability notifications"></p>
+
 ---
 
 ## Features

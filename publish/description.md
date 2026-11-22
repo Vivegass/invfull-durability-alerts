@@ -2,6 +2,8 @@
 
 Neat, vanilla-styled notifications in the bottom-right corner — with a sound — when your **inventory is full** or the **item in your hand is about to break**.
 
+![Demo](https://raw.githubusercontent.com/Vivegass/invfull-durability-alerts/main/publish/demo.gif)
+
 ## Features
 
 - **Inventory full** — a small notice slides in the moment your last free slot is taken, and slides away on its own or as soon as you free a slot.
