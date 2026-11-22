@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- Relaxed the Fabric Loader requirement (>=0.15) so the mod loads on NeoForge through Sinytra Connector.
+
 ## 1.0.1
 
 - Now available for Minecraft 1.21–1.21.1, 1.21.11, 26.1–26.1.2 and 26.2 (plus 26.3).

@@ -2,7 +2,7 @@
 mod.id = "invfull"
 mod.name = "InvFull & Durability Alerts"
 mod.group = "io.github.vivegass"
-mod.version = "1.0.1"
+mod.version = "1.0.2"
 
 deps.fabric_loader = "0.20.1"
 loomx.loom_version = "1.19-SNAPSHOT"
