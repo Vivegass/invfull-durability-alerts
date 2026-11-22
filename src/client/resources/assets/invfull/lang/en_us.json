@@ -1,0 +1,23 @@
+{
+	"invfull.toast.title": "Inventory full",
+	"invfull.toast.subtitle": "Free up some space",
+	"invfull.durability.title": "Item about to break",
+	"invfull.durability.subtitle": "%s: %s/%s",
+	"invfull.command.reloaded": "InvFull & Durability Alerts: config reloaded",
+	"invfull.config.title": "InvFull & Durability Alerts",
+	"invfull.config.general": "Notifications",
+	"invfull.config.toast_seconds": "Notification duration",
+	"invfull.config.seconds": "%s s",
+	"invfull.config.full": "Inventory full",
+	"invfull.config.durability": "Low durability",
+	"invfull.config.enabled": "Enabled",
+	"invfull.config.durability_percent": "Warn at durability",
+	"invfull.config.offhand": "Check offhand too",
+	"invfull.config.show_toast": "Show notification",
+	"invfull.config.play_sound": "Play sound",
+	"invfull.config.sound": "Sound",
+	"invfull.config.sound.tooltip": "Any sound id: from the list, from another mod or from a resource pack.\nPreview: /invfull test full | durability",
+	"invfull.config.sound.invalid": "Invalid sound id",
+	"invfull.config.volume": "Volume",
+	"invfull.config.pitch": "Pitch"
+}

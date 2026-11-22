@@ -1,0 +1,23 @@
+{
+	"invfull.toast.title": "Инвентарь заполнен",
+	"invfull.toast.subtitle": "Освободите место",
+	"invfull.durability.title": "Предмет скоро сломается",
+	"invfull.durability.subtitle": "%s: %s/%s",
+	"invfull.command.reloaded": "InvFull & Durability Alerts: конфиг перезагружен",
+	"invfull.config.title": "InvFull & Durability Alerts",
+	"invfull.config.general": "Уведомления",
+	"invfull.config.toast_seconds": "Длительность уведомления",
+	"invfull.config.seconds": "%s с",
+	"invfull.config.full": "Инвентарь заполнен",
+	"invfull.config.durability": "Низкая прочность",
+	"invfull.config.enabled": "Включено",
+	"invfull.config.durability_percent": "Предупреждать при прочности",
+	"invfull.config.offhand": "Проверять и левую руку",
+	"invfull.config.show_toast": "Показывать уведомление",
+	"invfull.config.play_sound": "Проигрывать звук",
+	"invfull.config.sound": "Звук",
+	"invfull.config.sound.tooltip": "Любой id звука: из списка, из другого мода или из ресурспака.\nПрослушать: /invfull test full | durability",
+	"invfull.config.sound.invalid": "Некорректный id звука",
+	"invfull.config.volume": "Громкость",
+	"invfull.config.pitch": "Высота тона"
+}

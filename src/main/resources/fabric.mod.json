@@ -1,0 +1,43 @@
+{
+	"schemaVersion": 1,
+	"id": "invfull",
+	"version": "${version}",
+	"name": "InvFull & Durability Alerts",
+	"description": "Neat bottom-right notifications with a sound when your inventory is full or the item in your hand is about to break. Configurable via Mod Menu.",
+	"authors": [
+		"Vivegass"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/invfull-durability-alerts",
+		"sources": "https://github.com/Vivegass/invfull-durability-alerts",
+		"issues": "https://github.com/Vivegass/invfull-durability-alerts/issues"
+	},
+	"license": "MIT",
+	"icon": "assets/invfull/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"io.github.vivegass.invfull.InvFullClient"
+		],
+		"modmenu": [
+			"io.github.vivegass.invfull.ModMenuIntegration"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.20.1",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"modmenu": "*",
+		"cloth-config": "*"
+	},
+	"custom": {
+		"modmenu": {
+			"links": {
+				"modmenu.github_releases": "https://github.com/Vivegass/invfull-durability-alerts/releases"
+			}
+		}
+	}
+}
