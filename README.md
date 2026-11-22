@@ -35,6 +35,7 @@ when your <b>inventory is full</b> or the <b>item in your hand is about to break
 | Loader | Fabric Loader ≥ 0.20.1 |
 | Required | [Fabric API](https://modrinth.com/mod/fabric-api) |
 | Optional | [Mod Menu](https://modrinth.com/mod/modmenu) + [Cloth Config](https://modrinth.com/mod/cloth-config) — in-game settings screen |
+| NeoForge | via [Sinytra Connector](https://modrinth.com/mod/connector) + [Forgified Fabric API](https://modrinth.com/mod/forgified-fabric-api) (tested on 26.2); settings via `config/invfull.json` |
 
 ## Configuration
 

@@ -25,6 +25,10 @@ Neat, vanilla-styled notifications in the bottom-right corner — with a sound �
 - [Fabric API](https://modrinth.com/mod/fabric-api) — required
 - [Mod Menu](https://modrinth.com/mod/modmenu) + [Cloth Config](https://modrinth.com/mod/cloth-config) — optional, for the settings screen
 
+### NeoForge
+
+Works on NeoForge through [Sinytra Connector](https://modrinth.com/mod/connector) + [Forgified Fabric API](https://modrinth.com/mod/forgified-fabric-api) (tested on 26.2; Connector is also available for 1.21.1 and 26.1.2). Mod Menu isn't available there, so change settings in `config/invfull.json` and run `/invfull reload`.
+
 Source code: [GitHub](https://github.com/Vivegass/invfull-durability-alerts) · MIT License
 
 ---
