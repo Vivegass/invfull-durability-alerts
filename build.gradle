@@ -1,5 +1,6 @@
 plugins {
 	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+	id 'me.modmuss50.mod-publish-plugin' version '2.2.1'
 }
 
 repositories {
@@ -67,5 +68,66 @@ jar {
 
 	from("LICENSE") {
 		rename { "${it}_$projectName"}
+	}
+}
+
+// ---------------------------------------------------------------------------
+// Publishing to Modrinth / CurseForge / GitHub Releases.
+//   ./gradlew publishMods             -> dry run only (files go to build/publishMods)
+//   ./gradlew publishMods -Prelease   -> real upload
+// Tokens come from environment variables only: MODRINTH_TOKEN, CURSEFORGE_TOKEN, GITHUB_TOKEN.
+// A platform is skipped while its project id in gradle.properties is empty.
+// ---------------------------------------------------------------------------
+def changelogFor = { String ver ->
+	// Text under "## <ver>" up to the next "## " heading.
+	def lines = file("CHANGELOG.md").readLines("UTF-8")
+	int start = lines.findIndexOf { it.trim() == "## " + ver }
+	if (start < 0) return "See CHANGELOG.md"
+	int end = lines.findIndexOf(start + 1) { it.startsWith("## ") }
+	(end < 0 ? lines.subList(start + 1, lines.size()) : lines.subList(start + 1, end)).join("\n").trim()
+}
+
+publishMods {
+	file = jar.archiveFile
+	displayName = "InvFull & Durability Alerts ${project.version}"
+	changelog = changelogFor(project.version.toString())
+	type = STABLE
+	modLoaders.add("fabric")
+	dryRun = !providers.gradleProperty("release").isPresent()
+
+	def mrId = providers.gradleProperty("modrinth_id").getOrElse("")
+	if (mrId) {
+		modrinth {
+			projectId = mrId
+			accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+			minecraftVersions.add(project.minecraft_version)
+			environment = CLIENT_ONLY
+			requires("fabric-api")
+			optional("modmenu")
+			optional("cloth-config")
+		}
+	}
+
+	def cfId = providers.gradleProperty("curseforge_id").getOrElse("")
+	if (cfId) {
+		curseforge {
+			projectId = cfId
+			projectSlug = "invfull-durability-alerts"
+			accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+			minecraftVersions.add(project.minecraft_version)
+			javaVersions.add(JavaVersion.VERSION_25)
+			client = true
+			server = false
+			requires("fabric-api")
+			optional("modmenu")
+			optional("cloth-config")
+		}
+	}
+
+	github {
+		repository = "Vivegass/invfull-durability-alerts"
+		accessToken = providers.environmentVariable("GITHUB_TOKEN")
+		commitish = "main"
+		tagName = "v${project.version}"
 	}
 }
