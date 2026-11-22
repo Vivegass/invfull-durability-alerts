@@ -41,3 +41,7 @@ replay_*.log
 
 # local
 run.log
+
+# stonecutter
+.stonecutter/
+versions/*/run/

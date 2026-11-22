@@ -16,4 +16,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: invfull-durability-alerts
-          path: build/libs/*.jar
+          path: versions/*/build/libs/*.jar

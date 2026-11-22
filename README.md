@@ -31,7 +31,7 @@ when your <b>inventory is full</b> or the <b>item in your hand is about to break
 
 | | |
 |---|---|
-| Minecraft | 26.3 |
+| Minecraft | 1.21–1.21.1, 1.21.11, 26.1–26.1.2, 26.2, 26.3 |
 | Loader | Fabric Loader ≥ 0.20.1 |
 | Required | [Fabric API](https://modrinth.com/mod/fabric-api) |
 | Optional | [Mod Menu](https://modrinth.com/mod/modmenu) + [Cloth Config](https://modrinth.com/mod/cloth-config) — in-game settings screen |
@@ -85,13 +85,15 @@ when your <b>inventory is full</b> or the <b>item in your hand is about to break
 
 ## Building
 
-Requires JDK 25.
+Requires JDK 25. The project uses [Stonecutter](https://stonecutter.kikugie.dev/) to build every supported Minecraft version from one source tree.
 
 ```sh
-./gradlew build
+./gradlew build                      # all versions -> versions/<mc>/build/libs/
+./gradlew :1.21.11:build             # a single version
+./gradlew :26.3:runClientGameTest    # visual smoke test (1.21.4+), screenshot in run/screenshots/
 ```
 
-The jar is written to `build/libs/`.
+Version-specific code is marked with Stonecutter comments (`//? if >=26.1 {`); dependency versions are in `stonecutter.properties.toml`.
 
 ## License
 

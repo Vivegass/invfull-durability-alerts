@@ -3,9 +3,19 @@ package io.github.vivegass.invfull;
 import com.mojang.brigadier.Command;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommands;
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+//? if >=26.1 {
+import net.fabricmc.fabric.api.client.command.v2.ClientCommands;
+//?} else {
+/*import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+*///?}
+//? if >=1.21.6 {
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
+//?} else {
+/*import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+*///?}
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
@@ -32,7 +42,11 @@ public class InvFullClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		InvFullConfig.load();
+		//? if >=1.21.6 {
 		HudElementRegistry.addLast(Identifier.fromNamespaceAndPath(MOD_ID, "notifications"), Notifications::extract);
+		//?} else {
+		/*HudRenderCallback.EVENT.register(Notifications::extract);
+		*///?}
 		ClientTickEvents.END_CLIENT_TICK.register(this::tick);
 		registerCommands();
 	}
@@ -51,7 +65,12 @@ public class InvFullClient implements ClientModInitializer {
 		}
 		InvFullConfig cfg = InvFullConfig.get();
 		tickInventory(player, cfg);
-		mainHand.tick(player.getInventory().getSelectedSlot(), player.getMainHandItem(), cfg);
+		//? if >=1.21.5 {
+		int selected = player.getInventory().getSelectedSlot();
+		//?} else {
+		/*int selected = player.getInventory().selected;
+		*///?}
+		mainHand.tick(selected, player.getMainHandItem(), cfg);
 		if (cfg.checkOffhand) offHand.tick(-1, player.getOffhandItem(), cfg);
 	}
 
@@ -133,20 +152,28 @@ public class InvFullClient implements ClientModInitializer {
 		}
 	}
 
+	private static LiteralArgumentBuilder<FabricClientCommandSource> literal(String name) {
+		//? if >=26.1 {
+		return ClientCommands.literal(name);
+		//?} else {
+		/*return ClientCommandManager.literal(name);
+		*///?}
+	}
+
 	private void registerCommands() {
 		ClientCommandRegistrationCallback.EVENT.register((dispatcher, ctx) -> dispatcher.register(
-				ClientCommands.literal("invfull")
-						.then(ClientCommands.literal("reload").executes(c -> {
+				literal("invfull")
+						.then(literal("reload").executes(c -> {
 							InvFullConfig.load();
 							c.getSource().sendFeedback(Component.translatable("invfull.command.reloaded"));
 							return Command.SINGLE_SUCCESS;
 						}))
-						.then(ClientCommands.literal("test")
-								.then(ClientCommands.literal("full").executes(c -> {
+						.then(literal("test")
+								.then(literal("full").executes(c -> {
 									alertFull(InvFullConfig.get());
 									return Command.SINGLE_SUCCESS;
 								}))
-								.then(ClientCommands.literal("durability").executes(c -> {
+								.then(literal("durability").executes(c -> {
 									ItemStack held = c.getSource().getPlayer().getMainHandItem();
 									ItemStack demo = held.isDamageableItem() ? held.copy() : new ItemStack(Items.DIAMOND_PICKAXE);
 									if (!isLow(demo, InvFullConfig.get())) demo.setDamageValue(demo.getMaxDamage() * 95 / 100);

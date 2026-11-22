@@ -49,38 +49,26 @@
 - [ ] Проверить в игре `/invfull test full`, `/invfull test durability` и экран настроек
 - [x] Релиз на GitHub `v1.0.0+26.3` создан
 
-## Выкладка версии одной командой
+## Выкладка версий одной командой
 
-Сборка подключена к [mod-publish-plugin](https://modmuss50.github.io/mod-publish-plugin/): jar, changelog (раздел текущей версии из `CHANGELOG.md`), версия игры, загрузчик и зависимости уходят на площадки автоматически.
+Сборка — мультиверсионная ([Stonecutter](https://stonecutter.kikugie.dev/)): один код, jar на каждую версию Minecraft. Версии и зависимости — в `stonecutter.properties.toml`, ID проектов — в `gradle.properties`. Публикация — [mod-publish-plugin](https://modmuss50.github.io/mod-publish-plugin/), каждый jar уходит со своим списком версий игры.
 
-### Один раз
+Токены — только в переменных окружения (сохраните сами, никому не показывайте):
 
-1. Создайте проекты на сайтах (поля — в таблицах выше). После модерации возьмите ID:
-   - **Modrinth:** страница проекта → ⋮ → *Copy ID* (8 символов).
-   - **CurseForge:** справа на странице проекта, *Project ID* (число).
-2. Впишите их в `gradle.properties`:
-   ```properties
-   modrinth_id=XXXXXXXX
-   curseforge_id=1234567
-   ```
-3. Создайте токены и сохраните в переменные окружения (вводите сами, никому не показывайте):
-   - Modrinth: https://modrinth.com/settings/pats — права *Create versions*, *Read versions*, *Write versions*.
-   - CurseForge: https://legacy.curseforge.com/account/api-tokens
-   ```powershell
-   setx MODRINTH_TOKEN "ваш_токен"
-   setx CURSEFORGE_TOKEN "ваш_токен"
-   ```
-   После `setx` перезапустите терминал/приложение.
+```powershell
+setx MODRINTH_TOKEN "ваш_токен"
+setx CURSEFORGE_TOKEN "ваш_токен"
+```
 
 ### Каждый релиз
 
-1. Поднимите `version` в `gradle.properties`, добавьте раздел в `CHANGELOG.md`.
-2. Пробный прогон (ничего не публикует, файлы в `build/publishMods/`):
+1. Поднимите `mod.version` в `stonecutter.properties.toml`, добавьте раздел `## <версия>` в `CHANGELOG.md`.
+2. Пробный прогон (ничего не публикует, файлы в `versions/*/build/publishMods/`):
    ```powershell
    ./gradlew publishMods
    ```
-3. Публикация:
+3. Публикация всех версий:
    ```powershell
-   $env:GITHUB_TOKEN = gh auth token   # если нужен и релиз на GitHub
    ./gradlew publishMods -Prelease
    ```
+   Одна версия: `./gradlew :1.21.11:publishMods -Prelease`.

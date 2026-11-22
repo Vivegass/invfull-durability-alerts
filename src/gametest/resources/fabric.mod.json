@@ -1,0 +1,10 @@
+{
+	"schemaVersion": 1,
+	"id": "invfull-gametest",
+	"version": "1.0.0",
+	"name": "InvFull & Durability Alerts client gametest",
+	"environment": "client",
+	"entrypoints": {
+		"fabric-client-gametest": ["io.github.vivegass.invfull.test.InvFullClientGameTest"]
+	}
+}

@@ -1,0 +1,43 @@
+# Per-version properties, see https://stonecutter.kikugie.dev/wiki/config/properties
+mod.id = "invfull"
+mod.name = "InvFull & Durability Alerts"
+mod.group = "io.github.vivegass"
+mod.version = "1.0.1"
+
+deps.fabric_loader = "0.20.1"
+loomx.loom_version = "1.19-SNAPSHOT"
+
+["1.21.1"]
+mod.mc_compat = ">=1.21 <=1.21.1"
+mod.mc_releases = ["1.21", "1.21.1"]
+deps.fabric_api = "0.116.18+1.21.1"
+deps.modmenu = "11.0.5"
+deps.cloth = "15.0.140"
+
+["1.21.11"]
+mod.mc_compat = "1.21.11"
+mod.mc_releases = ["1.21.11"]
+deps.fabric_api = "0.141.6+1.21.11"
+deps.modmenu = "17.0.1"
+deps.cloth = "21.11.153"
+
+["26.1.2"]
+mod.mc_compat = ">=26.1 <26.2"
+mod.mc_releases = ["26.1", "26.1.1", "26.1.2"]
+deps.fabric_api = "0.155.3+26.1.2"
+deps.modmenu = "18.0.2"
+deps.cloth = "26.1.154"
+
+["26.2"]
+mod.mc_compat = "~26.2"
+mod.mc_releases = ["26.2"]
+deps.fabric_api = "0.161.0+26.2"
+deps.modmenu = "20.0.3"
+deps.cloth = "26.2.155"
+
+["26.3"]
+mod.mc_compat = "~26.3"
+mod.mc_releases = ["26.3"]
+deps.fabric_api = "0.166.2+26.3"
+deps.modmenu = "21.0.1"
+deps.cloth = "26.3.158"
