@@ -72,3 +72,7 @@ setx CURSEFORGE_TOKEN "ваш_токен"
    ./gradlew publishMods -Prelease
    ```
    Одна версия: `./gradlew :1.21.11:publishMods -Prelease`.
+
+### NeoForge (через Sinytra Connector)
+
+Для 1.21.1, 26.1.2 и 26.2 дополнительно собирается `*-neoforge.jar` (тот же Fabric-jar + служебный файл, чтобы у него был свой хеш) и публикуется отдельной версией с загрузчиком **NeoForge** и обязательными зависимостями **Sinytra Connector** и **Forgified Fabric API**. Так мод находится в лаунчерах (Prism и др.) при фильтре NeoForge, и зависимости ставятся автоматически. Список версий с Connector — `hasConnector` в `build.gradle.kts`.

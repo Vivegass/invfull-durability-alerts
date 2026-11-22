@@ -3,6 +3,7 @@
 ## 1.0.2
 
 - Relaxed the Fabric Loader requirement (>=0.15) so the mod loads on NeoForge through Sinytra Connector.
+- NeoForge listing for 1.21–1.21.1, 26.1–26.1.2 and 26.2: installs Sinytra Connector and Forgified Fabric API as dependencies.
 
 ## 1.0.1
 

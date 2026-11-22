@@ -12,6 +12,9 @@ val requiredJava: JavaVersion = when {
     else -> JavaVersion.VERSION_21
 }
 
+// Minecraft versions that have Sinytra Connector (Fabric mods on NeoForge)
+val hasConnector = sc.current.version in setOf("1.21.1", "26.1.2", "26.2")
+
 val mcReleases: List<String> = sc.properties.rawOrNull("mod", "mc_releases")
     ?.asList().orEmpty().map { it.toString() }
 
@@ -84,6 +87,21 @@ tasks {
         from(rootProject.file("LICENSE")) { rename { "${it}_invfull" } }
     }
 
+    // NeoForge listing (runs through Sinytra Connector): the same Fabric jar plus a marker file,
+    // so it has its own hash and can be published as a separate version with its own dependencies.
+    val neoforgeJar = register<Jar>("neoforgeJar") {
+        group = "build"
+        description = "Fabric jar repackaged for the NeoForge (Sinytra Connector) listing"
+        enabled = hasConnector
+        from(zipTree(loomx.modJar.flatMap { it.archiveFile }))
+        from(rootProject.file("publish/neoforge/README-neoforge.txt")) { into("META-INF") }
+        archiveBaseName = "invfull-durability-alerts"
+        archiveVersion = project.version.toString()
+        archiveClassifier = "neoforge"
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
+    named("build") { dependsOn(neoforgeJar) }
+
     register<Copy>("buildAndCollect") {
         group = "build"
         description = "Builds the mod jar and copies it to build/libs/{mod version}/"
@@ -109,36 +127,70 @@ fun changelogFor(ver: String): String {
 }
 
 publishMods {
+    val mcRange = mcReleases.first() + if (mcReleases.size > 1) "–" + mcReleases.last() else ""
     file = loomx.modJar.flatMap { it.archiveFile }
-    displayName = "InvFull & Durability Alerts ${sc.properties["mod.version"]} for ${mcReleases.first()}${if (mcReleases.size > 1) "–" + mcReleases.last() else ""}"
+    displayName = "InvFull & Durability Alerts ${sc.properties["mod.version"]} for $mcRange"
     version = project.version.toString()
     changelog = changelogFor(sc.properties["mod.version"])
     type = STABLE
-    modLoaders.add("fabric")
     dryRun = !providers.gradleProperty("release").isPresent
 
+    val neoFile = tasks.named<Jar>("neoforgeJar").flatMap { it.archiveFile }
+    val neoName = "InvFull & Durability Alerts ${sc.properties["mod.version"]} for $mcRange (NeoForge via Sinytra Connector)"
+    val neoVersion = "${project.version}-neoforge"
+
     val mrId = providers.gradleProperty("modrinth_id").getOrElse("")
-    if (mrId.isNotEmpty()) modrinth {
-        projectId = mrId
-        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
-        minecraftVersions.addAll(mcReleases)
-        environment = CLIENT_ONLY
-        requires("fabric-api")
-        optional("modmenu")
-        optional("cloth-config")
+    if (mrId.isNotEmpty()) {
+        val mrOptions = modrinthOptions {
+            projectId = mrId
+            accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+            minecraftVersions.addAll(mcReleases)
+            environment = CLIENT_ONLY
+        }
+        modrinth("modrinth") {
+            from(mrOptions)
+            modLoaders.add("fabric")
+            requires("fabric-api")
+            optional("modmenu")
+            optional("cloth-config")
+        }
+        if (hasConnector) modrinth("modrinthNeoforge") {
+            from(mrOptions)
+            file = neoFile
+            displayName = neoName
+            version = neoVersion
+            modLoaders.add("neoforge")
+            requires("connector")
+            requires("forgified-fabric-api")
+        }
     }
 
     val cfId = providers.gradleProperty("curseforge_id").getOrElse("")
-    if (cfId.isNotEmpty()) curseforge {
-        projectId = cfId
-        projectSlug = "invfull-durability-alerts"
-        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
-        minecraftVersions.addAll(mcReleases)
-        javaVersions.add(requiredJava)
-        client = true
-        server = false
-        requires("fabric-api")
-        optional("modmenu")
-        optional("cloth-config")
+    if (cfId.isNotEmpty()) {
+        val cfOptions = curseforgeOptions {
+            projectId = cfId
+            projectSlug = "invfull-durability-alerts"
+            accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+            minecraftVersions.addAll(mcReleases)
+            javaVersions.add(requiredJava)
+            client = true
+            server = false
+        }
+        curseforge("curseforge") {
+            from(cfOptions)
+            modLoaders.add("fabric")
+            requires("fabric-api")
+            optional("modmenu")
+            optional("cloth-config")
+        }
+        if (hasConnector) curseforge("curseforgeNeoforge") {
+            from(cfOptions)
+            file = neoFile
+            displayName = neoName
+            version = neoVersion
+            modLoaders.add("neoforge")
+            requires("sinytra-connector")
+            requires("forgified-fabric-api")
+        }
     }
 }
